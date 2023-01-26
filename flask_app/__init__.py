@@ -1,3 +1,3 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask
 app = Flask(__name__)
-app.secret_key = "8y^^A7PAd^uQAq"
+app.secret_key = "Wednesday's child is full of woe"

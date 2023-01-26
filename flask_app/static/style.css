@@ -1,0 +1,76 @@
+body {
+    background: rgb(170,173,187);
+    background: radial-gradient(circle, rgba(170,173,187,1) 48%, rgba(255,255,255,1) 97%);
+    font-family: 'Roboto Mono', monospace;
+}
+
+header {
+    background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
+    /* color: #00308F; */
+    color: white;
+}
+
+form {
+    background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
+    color: white;
+}
+
+#intro_box {
+    width: 100%;
+    height: 200px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#intro_box p {
+    width: 50%;
+    padding: 10px;
+    font-size: medium;
+    border: 3px;
+    border-style: inset;
+    border-color: #1CB5E0;
+    box-shadow: 2px 2px 2px #1CB5E0;
+    color: #00308F;
+    align-self: center;
+    justify-content: center;
+}
+
+table {
+    background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
+    color: white;
+}
+
+th, tr, td {
+    color: white;
+}
+
+td a {
+    color: white;
+}
+
+.results_box {
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 20px;
+    background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
+    color: white;
+}
+
+.results {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+.results p {
+    width: 40%;
+}
+
+h3.results {
+    text-decoration: underline;
+}
