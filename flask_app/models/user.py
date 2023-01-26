@@ -35,6 +35,9 @@ class User:
         elif len(request['zip_code']) != 5:
             flash('Please enter your 5 digit zip code', 'regError')
             is_valid = False
+        elif request['zip_code'].isdigit() != True:
+            flash('Zip code must be 5 numerical values', 'regError')
+            is_valid = False
         if len(request['email']) < 1:
             flash('Please enter an email address', 'regError')
             is_valid = False

@@ -99,11 +99,6 @@ class Task:
         return tasks
 
     @classmethod
-    def destroy(cls, data):
-        query = "DELETE FROM tasks WHERE id = %(id)s;"
-        return connectToMySQL(db).query_db(query, data)
-    
-    @classmethod
     def inProgress(cls, data):
         query = "UPDATE tasks SET status = 'In Progress' WHERE id = %(id)s;"
         return connectToMySQL(db).query_db(query, data)
