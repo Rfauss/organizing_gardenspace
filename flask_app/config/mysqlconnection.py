@@ -5,13 +5,15 @@ import pymysql.cursors
 # this class will give us an instance of a connection to our database
 class MySQLConnection:
     def __init__(self, db):
-        connection = pymysql.connect(host = 'localhost',
-                                    user = 'root', # change the user and password as needed
-                                    password = 'rootroot', 
-                                    db = db,
-                                    charset = 'utf8mb4',
-                                    cursorclass = pymysql.cursors.DictCursor,
-                                    autocommit = True)
+        connection = pymysql.connect(
+            host="localhost",
+            user="root",  # change the user and password as needed
+            password="rootroot",
+            db=db,
+            charset="utf8mb4",
+            cursorclass=pymysql.cursors.DictCursor,
+            autocommit=True,
+        )
         # establish the connection to the database
         self.connection = connection
 
@@ -39,7 +41,8 @@ class MySQLConnection:
                 return False
             finally:
                 # close the connection
-                self.connection.close() 
+                self.connection.close()
+
 
 # connectToMySQL receives the database we're using and uses it to create an instance of MySQLConnection
 def connectToMySQL(db):
