@@ -1,0 +1,16 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+html {
+    height: 200%;
+}
+
+body {
+
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to top right, #fddb92 0%, #d1fdff 100%);
+    /* background-image: linear-gradient(to top right, #9890e3 0%, #b1f4cf 100%); */
+
+}
