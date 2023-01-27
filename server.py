@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.controllers import usersController, login_regController
+from flask_app.controllers import usersController, login_regController, notes_controller, gardenController
 
 
 # error handler

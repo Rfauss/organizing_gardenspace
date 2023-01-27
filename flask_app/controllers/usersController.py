@@ -17,14 +17,17 @@ def dashboard():
     # need to pass info for garden and tasks via class methods if we are rendering anything for them here - same for garden create, task create
 
 
-@app.route("/user/garden")
-def garden(*args):
-    # if 'user_id' not in session:
-    #     return redirect('/')
-    return render_template("garden.html")
+# @app.route("/user/garden")
+# def garden(*args):
+#     # if 'user_id' not in session:
+#     #     return redirect('/')
+#     return render_template("garden.html")
 
+# ^^ Moved to gardenController
 
-@app.route("/user/notes")
-def notes(*args):
+# @app.route("/user/notes")
+# def notes(*args):
 
-    return render_template("notes.html")
+#     return render_template("notes.html")
+
+# ^^ This has been moved to notesController
