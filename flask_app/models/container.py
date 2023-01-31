@@ -72,3 +72,13 @@ class Container:
             )
             containers.append(container_object)
         return containers
+
+    @classmethod
+    def getPlantsByContainer(cls, data):
+        query = """
+        SELECT * FROM plants
+        JOIN containers on containers.id = plants.container_id
+        """
+        results = connectToMySQL(db).query_db(query, data)
+        view_one = cls(results[0])
+        return view_one
