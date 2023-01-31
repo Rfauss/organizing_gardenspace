@@ -11,12 +11,17 @@ dateFormat = "%m/%d/%Y %I:%M %p"
 
 @app.route("/")
 def index():
+    return render_template("pages/index.html")
 
-    return render_template("index.html")
+
+@app.route("/signup")
+def signup():
+    return render_template("pages/signup.html")
 
 
 @app.route("/register", methods=["POST"])
 def register():
+    print(request.form)
     if user.User.validate_create(request.form):
         pw_hash = bcrypt.generate_password_hash(request.form["password"])
         data = {
@@ -27,7 +32,7 @@ def register():
         }
         session["user_id"] = user.User.save(data)
         return redirect("/user/home")
-    return redirect("/")
+    return redirect("/signup")
 
 
 @app.route("/login", methods=["POST"])

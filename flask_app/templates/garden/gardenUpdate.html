@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Plot
+{% endblock title %}
+
+
+{% block content %}
+
+
+{% if container_contents == [] %}
+<script>
+    $(document).ready(function () {
+        $("#oops").modal('show');
+    });
+</script>
+
+<div id="oops" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Oops!</h5>
+                <a href="/gardens" class="btn-close"></a>
+            </div>
+            <form action=" /plots/add" method="post">
+                <div class="modal-body">
+                    <p>It looks like you haven't added any plants yet, let's add them now.</p>
+                    <div class="mb-3">
+                        <label for="plantName" class="form-label">Plant name</label>
+                        <input type="text" class="form-control" id="plantName" name="plant_name" placeholder="Tomatoes">
+                        <label for="numPlants" class="form-label">Number of plants</label>
+                        <input type="number" id="plantCount" name="plant_count" min="1" max="12" class="form-control"
+                            placeholder="Min. 1, Max. 12">
+                        <input type="hidden" id="plantId" name="plant_id" value="False">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="/gardens" class="btn btn-secondary">Cancel</a>
+                    <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+{% for eachPlant in container_contents %}
+<div class="container-fluid p-3 rounded" style="margin-top: 150px; max-width: 240px; background-color: white;">
+    <form action="/plots/add" method="post">
+        <div class="mb-3">
+            <label for="plantName" class="form-label">Plant name</label>
+            <input type="text" class="form-control" name="plant_name" id="plantName" value={{eachPlant.name}}>
+        </div>
+        <div class="mb-3">
+            <label for="plantCount" class="form-label">Plant count</label>
+            <input type="number" class="form-control" name="plant_count" id="plantCount" value={{eachPlant.count}}>
+            <input type="hidden" name="plant_id" id="plantId" value={{eachPlant.id}}>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn customButtonSubmit">Submit</button>
+            </div>
+            <div class="col">
+                <a href="/gardens" class="btn customButtonCancel">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endfor %}
+{% endblock content %}

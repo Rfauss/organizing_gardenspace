@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Notes
+{% endblock title %}
+
+{% block content %}
+<div class="container" style="margin-top: 150px;">
+    <div class="table-responsive">
+        <table class="table text">
+            <thead>
+                <tr>
+                    <th class="tableData text-center">Title</th>
+                    <th class="tableData text-center">Content</th>
+                    <th class="tableData text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for note in all_notes %}
+                <tr>
+                    <td class="tableData text-center"><span class="d-inline-block text-truncate"
+                            style="max-width: 75px;">{{note.title}}</span></td>
+                    <td class="tableData text-center">
+                        <span class="d-inline-block text-truncate" style="max-width: 250px;">{{note.content}}</span>
+                    </td>
+                    <td class="tableData text-center">
+                        <a href="" data-bs-toggle="modal" data-bs-target="#{{note.id}}"
+                            style="text-decoration: none;">View</a>
+                        <a href="/notes/edit/{{note.id}}" style="text-decoration: none;">Edit</a>
+                        <a href="/notes/delete/{{note.id}}" style="text-decoration: none;">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% for note in all_notes %}
+<div>
+    <div class="modal fade" id="{{note.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">{{note.title}}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ">
+                    {{note.content}}
+                </div>
+                <div class="modal-footer">
+                    <a href="/notes/edit/{{note.id}}" class="btn btn-primary">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
+
+{% block navPlantingNotes %}
+<a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Planting Notes
+</a>
+{% endblock navPlantingNotes %}

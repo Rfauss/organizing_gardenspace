@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}Your Garden{% endblock title %}
+
+
+{% block content %}
+
+<script>
+    $(document).ready(function () {
+        $('[data-bs-toggle="popover"]').popover({
+            placement: 'top',
+            trigger: 'hover'
+        });
+    });
+</script>
+
+
+{% if garden == [] %}
+<script>
+    $(document).ready(function () {
+        $("#oops").modal('show');
+    });
+</script>
+
+<div id="oops" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Oops!</h5>
+                <a href="/user/home" class="btn-close"></a>
+            </div>
+            <form action=" /gardens/add" method="post">
+                <div class="modal-body">
+                    <p>It looks like you haven't added a garden yet, let's create one now.</p>
+                    <div class="mb-3">
+                        <label for="gardenName" class="form-label">Garden name</label>
+                        <input type="text" class="form-control" id="gardenName" name="garden_name"
+                            placeholder="My awesome garden!">
+                        <label for="rows" class="form-label">Number of rows</label>
+                        <input type="number" id="rows" name="rows" min="1" max="6" class="form-control"
+                            placeholder="Min. 1, Max. 6">
+                        <label for="cols" class="form-label">Number of columns</label>
+                        <input type="number" id="cols" name="columns" min="1" max="6" class="form-control"
+                            placeholder="Min. 1, Max. 6">
+                        <label for="zip" class="form-label">Zip code</label>
+                        <input id="zip" name="location" type="text" pattern="[0-9]{5}" class="form-control"
+                            placeholder="Last 5 digits only.">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="/user/home" class="btn btn-secondary">Cancel</a>
+                    <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="container text-center" style="margin-top: 150px;">
+    <h1 style="color: #1b4332; text-shadow: 1.5px 1.5px 1.5px slategrey;">Hover to view each plot, click to edit.
+    </h1>
+</div>
+<div class="d-flex justify-content-center" style="margin-top: 30px;">
+    {% if garden == [] %}
+    {% set rowCount = 0 %}
+    {% set colCount = 0 %}
+    {% endif %}
+    {% set container = namespace(value=1) %}
+    {% for row in range(rowCount) %}
+    <div>
+        <div class="row px-1 py-2 gy-2 rounded" style="width: fit-content; height: fit-content; padding-left: 10px;">
+            {% for col in range(colCount) %}
+            <div class="col gy-4" style="width: fit-content; height: fit-content;">
+                {% set i = all_containers[container.value]["count"] %}
+                {% set id = all_containers[container.value]["id"] %}
+                <a href="/plots/edit/{{id}}">
+                    <img class="rounded" src="{{ url_for('static', filename='imgs/dirt2.png') }}" alt="dirt"
+                        style="max-width: 75%; height: auto;" tabindex="0" data-bs-toggle="popover"
+                        data-bs-title={{all_containers[container.value]["count"]}}
+                        data-bs-content={{all_containers[container.value]["name"]}}>
+                </a>
+                {% set container.value = container.value + 1 %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+
+{% endblock content %}
+
+
+
+{% block navYourGarden %}
+<a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Your Garden
+</a>
+{% endblock navYourGarden %}

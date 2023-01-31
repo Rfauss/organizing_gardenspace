@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+WARNING
+{% endblock title %}
+
+{% block content %}
+<script>
+    $(document).ready(function () {
+        $("#warning").modal('show');
+    });
+</script>
+
+<div id="warning" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">WARNING</h5>
+                <a href="/gardens" class="btn-close"></a>
+            </div>
+            <form action=" /plots/add" method="post">
+                <div class="modal-body">
+                    <p><strong>Warning, you are about to delete your garden. This can not be undone. Press cancel to
+                            return to safety.</strong></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="/gardens" class="btn btn-secondary">Cancel</a>
+                    <a href="/gardens/delete">Better luck next year!</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -3,75 +3,150 @@ from flask import render_template, request, redirect, session
 from flask_app.models import user, garden, container
 from datetime import datetime
 import uuid
+
 dateFormat = "%m/%d/%Y %I:%M %p"
+
 
 @app.route("/gardens")
 def displayGarden():
     if "user_id" not in session:
         return redirect("/")
-    return render_template("garden.html", current_user = user.User.getById({'id' : session['user_id']}), garden = garden.Garden.getGarden({'id' : session['user_id']}), all_containers = container.Container.getAll())
+    else:
+        localGarden = garden.Garden.getGarden({"user_id": session["user_id"]})
+        if localGarden == False:
+            return render_template(
+                "garden/garden.html",
+                current_user=user.User.getById({"id": session["user_id"]}),
+                garden=[],
+                all_containers=[],
+            )
+        else:
+            session["garden_id"] = localGarden[0]["id"]
+            rowCount = int(localGarden[0]["rows"])
+            colCount = int(localGarden[0]["columns"])
+            totalCount = rowCount * colCount
+            containerCount = 1
+            listContainers = (
+                garden.Garden.getContainers({"id": localGarden[0]["id"]}),
+            )
+            all_containers = {}
+            for eachDictionary in listContainers[0]:
+                if containerCount > totalCount:
+                    containerCount = 1
+                    break
+                all_containers.update({containerCount: eachDictionary})
+                containerCount += 1
 
-@app.route("/gardens/create", methods=['POST'])
+            return render_template(
+                "garden/garden.html",
+                garden=localGarden,
+                rowCount=rowCount,
+                colCount=colCount,
+                all_containers=all_containers,
+                totalCount=totalCount,
+            )
+
+
+@app.route("/gardens/warning")
+def warnGarden():
+    if "user_id" not in session:
+        return redirect("/")
+    else:
+        return render_template("garden/gardenWarning.html")
+
+
+@app.route("/gardens/delete")
+def deleteGarden():
+    if "user_id" not in session:
+        return redirect("/")
+    else:
+        if "garden_id" not in session:
+            return redirect("/gardens")
+        else:
+            all_containers = garden.Garden.getContainers({"id": session["garden_id"]})
+            for eachContainer in all_containers:
+                garden.Garden.deletePlants({"id": eachContainer["id"]})
+            garden.Garden.deleteAllContainers({"id": session["garden_id"]})
+            garden.Garden.deleteGarden({"id": session["user_id"]})
+            session.pop("garden_id", default=None)
+            return redirect("/gardens")
+
+
+@app.route("/gardens/create")
 def createGarden():
-    if 'user_id' not in session:
-        return redirect('/')
-    return render_template('gardenCreate.html', current_user = user.User.getById({'id' : session['user_id']}))
+    if "user_id" not in session:
+        return redirect("/")
+    return render_template(
+        "garden/gardenCreate.html",
+        current_user=user.User.getById({"id": session["user_id"]}),
+    )
 
-@app.route('/gardens/add', methods=['POST'])
+
+@app.route("/gardens/add", methods=["POST"])
 def addGarden():
-    if 'user_id' not in session:
+    if "user_id" not in session:
         return redirect("/")
     if garden.Garden.validate_create(request.form):
+        location = int(request.form["location"])
+        user_id = session["user_id"]
         data = {
-            'id' : uuid.uuid4(),
-            'garden_name': request.form['garden_name'],
-            'location': request.form['location'],
-            'description': request.form['description'],
-            'user_id': session['user_id']
+            "garden_name": request.form["garden_name"],
+            "location": location,
+            "rows": int(request.form["rows"]),
+            "columns": int(request.form["columns"]),
+            "user_id": user_id,
         }
         garden.Garden.save(data)
-        return redirect('/gardens')
-    return redirect('/gardens/create')
+        return redirect("/gardens")
+    return redirect("/gardens")
 
-@app.route('/gardens/edit/<int:user_id>')
-def editGarden(user_id):
-    if 'user_id' not in session:
+
+@app.route("/plots/edit/<int:id>")
+def editPlot(id):
+    if "user_id" not in session:
         return redirect("/")
-    return render_template('gardenUpdate.html', current_user = user.User.getById({'id' : session['user_id']}),  garden = garden.Garden.getGarden({'id' : session['user_id']}))
+    container_contents = garden.Garden.getPlants({"container_id": id})
+    print(f"Container contents are: {container_contents}")
+    if container_contents == False:
+        container_contents = []
+        session["container_id"] = id
+        return render_template(
+            "garden/gardenUpdate.html",
+            container_contents=container_contents,
+        )
+    else:
+        session["container_id"] = id
+        session["plant_id"] = container_contents[0]["id"]
+        return render_template(
+            "garden/gardenUpdate.html",
+            container_contents=container_contents,
+        )
 
-@app.route('/gardens/update', methods=['POST'])
-def updateGarden():
-    if 'user_id' not in session:
+
+@app.route("/plots/add", methods=["POST"])
+def addPlants():
+    if "user_id" not in session:
         return redirect("/")
-    if garden.Garden.validate_create(request.form):
+    if garden.Garden.validate_plants(request.form):
         data = {
-            'garden_name' : request.form['garden_name'],
-            'location' : request.form['location'],
-            'description' : request.form['description'],
-            'user_id' : session['user_id']
+            "name": request.form["plant_name"],
+            "count": request.form["plant_count"],
+            "container_id": session["container_id"],
         }
-        garden.Garden.update(data)
-        return redirect('/gardens')
-    return redirect(f"/gardens/edit/{session['user_id']}")
-
-
-@app.route('/gardens/container')
-def addContainer():
-    if 'user_id' not in session:
-        return redirect('/')
-    return render_template('containerCreate.html', current_user = user.User.getById({'id' : session['user_id']}))
-
-@app.route('/gardens/container/add', methods=['POST'])
-def saveContainer():
-    if 'user_id' not in session:
-        return redirect('/')
-    if container.Container.validate_create(request.form):
-        data = {
-            'name' : request.form['name'],
-            'count' : request.form['count'],
-            'garden_id' : request.form['garden_id'] # Need to add a hidden input for garden_id on the form
-        }
-        container.Container.save(data)
-        return redirect('/gardens')
-    return redirect('/gardens/container')
-    
+        if request.form["plant_id"] == False:
+            garden.Garden.insertIntoContainers(data)
+            session.pop("container_id")
+            return redirect("/gardens")
+        else:
+            data = {
+                "name": request.form["plant_name"],
+                "count": request.form["plant_count"],
+                "container_id": session["container_id"],
+                "plant_id": session["plant_id"],
+            }
+            garden.Garden.updateContainer(data)
+            session.pop("container_id")
+            session.pop("plant_id")
+            return redirect("/gardens")
+    else:
+        return redirect("/gardens")

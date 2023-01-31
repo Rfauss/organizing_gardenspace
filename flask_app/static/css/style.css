@@ -4,7 +4,8 @@
 }
 
 html {
-    height: 200%;
+    min-height: 100%;
+    height: auto;
 }
 
 body {
@@ -12,5 +13,45 @@ body {
     background-repeat: no-repeat;
     background-image: linear-gradient(to top right, #fddb92 0%, #d1fdff 100%);
     /* background-image: linear-gradient(to top right, #9890e3 0%, #b1f4cf 100%); */
+    font-family: 'Solitreo';
+}
+
+#logoTitle {
+    font-family: 'Dancing Script';
+}
+
+
+.customButtonCancel {
+
+    --bs-btn-color: #FF8FA3;
+    --bs-btn-border-color: #FF8FA3;
+    --bs-btn-hover-bg: #FF8FA3;
+    --bs-btn-hover-color: #C9184A;
+
+}
+
+.customButtonSubmit {
+
+    --bs-btn-color: #AEDA95;
+    --bs-btn-border-color: #AEDA95;
+    --bs-btn-hover-bg: #AEDA95;
+    --bs-btn-hover-color: #4B9C7F;
+}
+
+
+.customButtonLight {
+    --bs-btn-color: #93aca9;
+    --bs-btn-bg: #ede8ba;
+    --bs-btn-border-color: #fadd98;
+    --bs-btn-hover-bg: #fadd98;
+    --bs-btn-hover-color: white;
+}
+
+.customLogoutButton {
+    --bs-btn-bg: #3c508d;
+    --bs-btn-color: #1c2541;
+    --bs-btn-border-color: #1c2541;
+    --bs-btn-hover-bg: #1c2541;
+    --bs-btn-hover-color: white;
 
 }

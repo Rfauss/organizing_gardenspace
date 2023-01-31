@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+{% block navbar %}
+<nav class="navbar navbar-dark navbar-expand-lg"
+    style="--bs-navbar-color: #1C2541; background-color: #6A7B76; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+    <div class="container-fluid">
+        <ul class="navbar-nav mx-auto">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='imgs/logoImg.png') }}" alt="Logo" width="60" height="40"
+                    class="d-inline-block align-text-top">
+                <span style="color: white; font-size: large;"> <strong>Tiny Plot Gardening</strong></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><strong>About</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><strong>Contact Us</strong></a>
+                </li>
+        </ul>
+    </div>
+    </div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+
+<div class="card mx-auto" style="margin-top: 50px; width: 25rem; height: 35rem;">
+    <div class="card-body">
+        <div class="d-flex justify-content-around">
+            <form action="/register" method="post" class="row-6 p-4">
+                <h2>Sign Up</h2>
+                {% with messages = get_flashed_messages(category_filter=["regError"]) %}
+                {% if messages %}
+                <div class="alert alert-danger" role="alert">
+                    {% for message in messages %}
+                    <p class="error">{{message}}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" name="name" class="form-control form-control-lg">
+                </div>
+                <div class="form-group">
+                    <label for="zip_code">Zip Code:</label>
+                    <input type="text" name="zip_code" class="form-control form-control-lg">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" class="form-control form-control-lg">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" class="form-control form-control-lg">
+                </div>
+                <div class="form-group">
+                    <label for="passConf">Confirm Password:</label>
+                    <input type="password" name="passConf" class="form-control form-control-lg">
+                </div>
+                <div class="col">
+                    <input type="submit" value="Register" class="btn customButtonSubmit" style="margin-top: 0.5rem;">
+                    <a href="/" class="btn customButtonCancel"
+                        style="margin-top: 0.5rem;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

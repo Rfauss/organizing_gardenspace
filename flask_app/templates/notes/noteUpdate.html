@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit a Note{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid p-3 rounded"
+    style="margin-top: 150px; max-width: 800px; border: 2.5px solid oldlace; background-color: white;">
+    <form action="/notes/update" method="post">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" class="form-control" name="title" id="title" value="{{current_note[0]['title']}}"
+                        style="background-color: oldlace;">
+                </div>
+                <div class=" mb-3">
+                    <label for="textarea" class="form-label">Notes:</label>
+                    <textarea class="form-control" name="content" id="textarea" rows="5"
+                        style="background-color: oldlace;">{{current_note[0]["content"]}}</textarea>
+                </div>
+                <button type="submit" value="submit" class="btn customButtonLight">Submit</button>
+            </div>
+            {% with messages = get_flashed_messages(category_filter=["noteError"]) %}
+            {% if messages %}
+            <div class="col">
+                <div class="alert alert-danger" role="alert">
+                    {% for message in messages %}
+                    <p class="error">{{message}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </form>
+</div>
+
+
+{% endblock content %}
