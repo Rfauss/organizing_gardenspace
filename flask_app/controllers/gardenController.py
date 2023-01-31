@@ -133,7 +133,7 @@ def addPlants():
             "count": request.form["plant_count"],
             "container_id": session["container_id"],
         }
-        if request.form["plant_id"] == False:
+        if request.form["plant_id"] == 'Null':
             garden.Garden.insertIntoContainers(data)
             session.pop("container_id")
             return redirect("/gardens")
