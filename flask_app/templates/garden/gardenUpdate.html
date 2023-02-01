@@ -57,6 +57,13 @@ Edit Plot
             <label for="plantCount" class="form-label">Plant count</label>
             <input type="number" class="form-control" name="plant_count" id="plantCount" value={{eachPlant.count}}>
             <input type="hidden" name="plant_id" id="plantId" value={{eachPlant.id}}>
+            <div class="form-check rounded" style="margin-top: 0.5rem;">
+                <input class="form-check-input" type="checkbox" value="checked" id="checkPlantDelete"
+                    name="check_plant_delete">
+                <label class="form-check-label" for="checkPlantDelete">
+                    Check this box to delete this plant
+                </label>
+            </div>
         </div>
         <div class="row">
             <div class="col">

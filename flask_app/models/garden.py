@@ -2,10 +2,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 
 db = "garden_calendar"
 from flask import flash
-from flask_app.models import user, task
-from datetime import datetime
-
-dateFormat = "%Y-%m-%d"
+from flask_app.models import user
 
 
 class Garden:
@@ -90,7 +87,7 @@ class Garden:
 
     @classmethod
     def getContainers(cls, data):
-        query = "SELECT id,name,count FROM containers WHERE garden_id = %(id)s"
+        query = "SELECT containers.id AS id, containers.name AS name, containers.count AS count, plants.name AS plant_name, plants.count AS plant_count FROM containers LEFT JOIN plants ON containers.id = plants.container_id WHERE containers.garden_id = %(id)s ORDER BY containers.count;"
         results = connectToMySQL(db).query_db(query, data)
         if results == ():
             return False
@@ -118,6 +115,15 @@ class Garden:
     @classmethod
     def getPlants(cls, data):
         query = "SELECT id,name,count,container_id FROM plants WHERE container_id = %(container_id)s"
+        results = connectToMySQL(db).query_db(query, data)
+        if results == ():
+            return False
+        else:
+            return results
+
+    @classmethod
+    def deletePlantsById(cls, data):
+        query = "DELETE FROM plants WHERE id = %(plant_id)s"
         results = connectToMySQL(db).query_db(query, data)
         if results == ():
             return False

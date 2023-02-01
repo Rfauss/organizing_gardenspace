@@ -1,10 +1,6 @@
 from flask_app import app
 from flask import render_template, request, redirect, session
-from flask_app.models import user, garden, container
-from datetime import datetime
-import uuid
-
-dateFormat = "%m/%d/%Y %I:%M %p"
+from flask_app.models import user, garden
 
 
 @app.route("/gardens")
@@ -133,7 +129,10 @@ def addPlants():
             "count": request.form["plant_count"],
             "container_id": session["container_id"],
         }
-        if request.form["plant_id"] == 'Null':
+        if request.form.get("check_plant_delete") == "checked":
+            garden.Garden.deletePlantsById({"plant_id": session["plant_id"]})
+            return redirect("/gardens")
+        if request.form["plant_id"] == "Null":
             garden.Garden.insertIntoContainers(data)
             session.pop("container_id")
             return redirect("/gardens")

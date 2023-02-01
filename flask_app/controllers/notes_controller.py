@@ -1,9 +1,6 @@
 from flask_app import app
 from flask import render_template, request, redirect, session
 from flask_app.models import user, note
-from datetime import date
-
-dateFormat = "%m/%d/%Y %I:%M %p"
 
 
 @app.route("/notes")

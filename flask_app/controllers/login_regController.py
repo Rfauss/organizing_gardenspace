@@ -4,9 +4,6 @@ from flask_app.models import user
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
-from datetime import datetime
-
-dateFormat = "%m/%d/%Y %I:%M %p"
 
 
 @app.route("/")

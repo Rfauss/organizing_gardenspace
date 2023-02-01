@@ -75,16 +75,20 @@
                 {% set id = all_containers[container.value]["id"] %}
                 <a href="/plots/edit/{{id}}">
                     <img class="rounded" src="{{ url_for('static', filename='imgs/dirt2.png') }}" alt="dirt"
-                        style="max-width: 75%; height: auto;" tabindex="0" data-bs-toggle="popover"
-                        data-bs-title={{all_containers[container.value]["count"]}}
-                        data-bs-content={{all_containers[container.value]["name"]}}>
+                        style="max-width: 75%; height: auto;" tabindex="0" data-bs-toggle="popover" data-bs-content="{{all_containers[container.value]['plant_name']}} {% if all_containers[container.value]['plant_count'] == None %}
+                            
+                        {% else %}
+                        {{all_containers[container.value]['plant_count']}}
+                        {% endif %}">
                 </a>
                 {% set container.value = container.value + 1 %}
             </div>
             {% endfor %}
         </div>
         {% endfor %}
+        <div>
 
+        </div>
     </div>
 </div>
 
