@@ -3,6 +3,37 @@
 
 
 {% block content %}
+<div class="card mx-auto" style="margin-top: 150px; width: 25rem; height: 35rem;">
+    <div class="card-body">
+        <div class="container">
+            <div class="row" style="margin-top: 1.5rem;">
+                <h2><b><u>Current Weather For : {{ weather.city }}</u></b></h2>
+            </div>
+            <div class="row" style="margin-top: 1.5rem;">
+                <h3>The Forecast for today is {{ weather.weather }}</h3>
+            </div>
+            <div class="row" style="margin-top: 1.5rem;">
+                <h3>The Temperature is {{ weather.temp }}°F</h3>
+            </div>
+            <div class="row" style="margin-top: 1.5rem;">
+                <h3>Humidity is at {{weather.humidity}}%</h3>
+            </div>
+            {% if weather.temp < 32 %} <div class="row" style="margin-top: 1.5rem;">
+                <h3><strong>WARNING FROST POTENTIAL LIKELY</strong></h3>
+        </div>
+        {% endif %}
+        <div class="row" style="margin-top: 1.5rem;">
+            <div class="col">
+                <a href="/gardens" class="btn customButtonSubmit">View Garden</a>
+            </div>
+            <div class="col">
+                <a href="/notes" class="btn customButtonLightPurple">View Notes</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 
 
 {% endblock content %}

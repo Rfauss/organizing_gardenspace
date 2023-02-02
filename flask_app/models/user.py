@@ -104,3 +104,12 @@ class User:
         if len(results) < 1:
             return False
         return cls(results[0])
+
+    @classmethod
+    def getZipcode(cls, data):
+        query = "SELECT users.zip_code FROM users WHERE id = %(id)s"
+        results = connectToMySQL(db).query_db(query, data)
+        if results == ():
+            return False
+        else:
+            return results

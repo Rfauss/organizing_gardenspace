@@ -55,3 +55,10 @@ body {
     --bs-btn-hover-color: white;
 
 }
+
+.customButtonLightPurple {
+    --bs-btn-color: #3c508d;
+    --bs-btn-border-color: #3c508d;
+    --bs-btn-hover-bg: #3c508d;
+    --bs-btn-hover-color: white;
+}

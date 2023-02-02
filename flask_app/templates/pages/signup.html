@@ -29,48 +29,57 @@
 {% endblock navbar %}
 
 {% block content %}
-
-<div class="card mx-auto" style="margin-top: 50px; width: 25rem; height: 35rem;">
-    <div class="card-body">
-        <div class="d-flex justify-content-around">
-            <form action="/register" method="post" class="row-6 p-4">
-                <h2>Sign Up</h2>
-                {% with messages = get_flashed_messages(category_filter=["regError"]) %}
-                {% if messages %}
-                <div class="alert alert-danger" role="alert">
-                    {% for message in messages %}
-                    <p class="error">{{message}}</p>
-                    {% endfor %}
+<div class="row">
+    <div class="col">
+        <div class="card mx-auto" style="margin-top: 50px; margin-right: -50rem; width: 25rem; height: 35rem;">
+            <div class="card-body">
+                <div class="d-flex justify-content-around">
+                    <form action="/register" method="post" class="row-6 p-4">
+                        <h2>Sign Up</h2>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="name">Full Name:</label>
+                                    <input type="text" name="name" class="form-control form-control-lg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="zip_code">Zip Code:</label>
+                            <input type="text" name="zip_code" class="form-control form-control-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="text" name="email" class="form-control form-control-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" name="password" class="form-control form-control-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="passConf">Confirm Password:</label>
+                            <input type="password" name="passConf" class="form-control form-control-lg">
+                        </div>
+                        <div class="col">
+                            <input type="submit" value="Register" class="btn customButtonSubmit"
+                                style="margin-top: 0.5rem;">
+                            <a href="/" class="btn customButtonCancel" style="margin-top: 0.5rem;">Cancel</a>
+                        </div>
+                    </form>
                 </div>
-                {% endif %}
-                {% endwith %}
-                <div class="form-group">
-                    <label for="name">Full Name:</label>
-                    <input type="text" name="name" class="form-control form-control-lg">
-                </div>
-                <div class="form-group">
-                    <label for="zip_code">Zip Code:</label>
-                    <input type="text" name="zip_code" class="form-control form-control-lg">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="text" name="email" class="form-control form-control-lg">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" class="form-control form-control-lg">
-                </div>
-                <div class="form-group">
-                    <label for="passConf">Confirm Password:</label>
-                    <input type="password" name="passConf" class="form-control form-control-lg">
-                </div>
-                <div class="col">
-                    <input type="submit" value="Register" class="btn customButtonSubmit" style="margin-top: 0.5rem;">
-                    <a href="/" class="btn customButtonCancel"
-                        style="margin-top: 0.5rem;">Cancel</a>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
+    {% with messages = get_flashed_messages(category_filter=["regError"]) %}
+    {% if messages %}
+    <div class="col" style="margin-top: 50px; margin-right: 15rem; max-width: 15rem;">
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+            <p class="error">{{message}}</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% endwith %}
 </div>
 {% endblock content %}
